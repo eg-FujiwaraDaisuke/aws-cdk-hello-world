@@ -8,14 +8,14 @@ export class CdkHelloWorldStack extends cdk.Stack {
       super(scope, id, props);
 
         const helloWorldFunction = new lambda.Function(this, 'HelloWorldFunction', {
-        runtime: lambda.Runtime.NODEJS_20_X,
-        code: lambda.Code.fromAsset('lambda'),
-        handler: 'hello.handler',
+          runtime: lambda.Runtime.NODEJS_20_X,
+          code: lambda.Code.fromAsset('lambda'),
+          handler: 'hello.handler',
         });
 
         const api = new apigateway.LambdaRestApi(this, 'HelloWorldApi', {
-        handler: helloWorldFunction,
-        proxy: false,
+          handler: helloWorldFunction,
+          proxy: false,
         });
 
         const helloResource = api.root.addResource('hello');
