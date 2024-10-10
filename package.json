@@ -2,7 +2,7 @@
   "name": "my-project",
   "version": "1.0.0",
   "scripts": {
-    "build": "webpack --config webpack.config.js",
+    "build": "webpack --config webpack.config.ts",
     "start": "node app.js"
   },
   "dependencies": {
@@ -11,6 +11,7 @@
   },
   "devDependencies": {
     "aws-cdk": "^2.161.1",
+    "ts-node": "^10.9.2",
     "typescript": "^5.6.2",
     "webpack": "^5.95.0",
     "webpack-cli": "^5.1.4",
