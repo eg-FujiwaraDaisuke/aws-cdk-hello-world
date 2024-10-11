@@ -2,14 +2,14 @@
   "compilerOptions": {
     "target": "ES2018",
     "module": "commonjs",
-    "outDir": "dist", // 出力先を変更（通常は dist フォルダが一般的）
-    "rootDir": "./", // プロジェクトのルートディレクトリを指定
+    "outDir": "dist",
+    "rootDir": "./",
     "strict": true,
     "esModuleInterop": true
   },
   "include": [
     "src/**/*",
-    "bin/**/*", // bin フォルダを含める
+    "bin/**/*",
   ],
   "exclude": ["node_modules"]
 }
