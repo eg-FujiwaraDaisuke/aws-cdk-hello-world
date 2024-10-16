@@ -1,1 +1,4 @@
 node_modules/
+
+# CDK output directory
+cdk.out/
