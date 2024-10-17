@@ -2,12 +2,8 @@
 import * as path from 'path';
 import { Configuration } from 'webpack';
 import * as fs from 'fs';
-// const nodeExternals = require('webpack-node-externals');
-// const CopyPlugin = require('copy-webpack-plugin');
 
 const ROOT_DIR = path.resolve(__dirname);
-// const SRC_DIR = path.join(ROOT_DIR, 'src');
-
 const entry = { ...getEntries('lambda') };
 
 const config: Configuration = {
