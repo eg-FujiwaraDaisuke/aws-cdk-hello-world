@@ -11,8 +11,6 @@ const ROOT_DIR = path.resolve(__dirname);
 const entry = { ...getEntries('lambda') };
 
 const config: Configuration = {
-  // CDK アプリのエントリーポイントを指定
-  // Todo　app.tsにかえる
   entry,
   output: {
     filename: '[name].js',
