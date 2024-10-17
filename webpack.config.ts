@@ -13,7 +13,7 @@ const entry = { ...getEntries('lambda') };
 const config: Configuration = {
   // CDK アプリのエントリーポイントを指定
   // Todo　app.tsにかえる
-  entry: './bin/hello-world.ts',
+  entry,
   output: {
     filename: '[name].js',
     path: path.resolve(ROOT_DIR, '.dist'),
@@ -45,7 +45,7 @@ const config: Configuration = {
 
 export default config;
 
-function getEntries(dirname, entries = {}) {
+function getEntries(dirname: string, entries: Record<string, string> = {}): {} {
   const dirpath = path.join(ROOT_DIR, dirname);
   const dirs = fs.readdirSync(dirpath, { withFileTypes: true });
   const targets = dirs.filter(({ name }) => name !== 'base');
