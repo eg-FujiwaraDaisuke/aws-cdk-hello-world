@@ -1,8 +1,9 @@
 {
   "compilerOptions": {
+    "incremental": true, 
     "target": "ES2018",
     "module": "commonjs",
-    "outDir": "dist",
+    "outDir": "./.build",
     "rootDir": "./",
     "strict": true,
     "esModuleInterop": true
