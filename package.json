@@ -4,7 +4,7 @@
   "scripts": {
     "build": "webpack --config webpack.config.ts",
     "start": "node app.js",
-    "test": "vitest"
+    "test": "vitest run"
   },
   "dependencies": {
     "aws-cdk-lib": "^2.161.0",
