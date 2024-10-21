@@ -16,16 +16,15 @@ export class CdkHelloWorldStack extends cdk.Stack {
         super(scope, `${stage}-${constructId}`, { env });
 
         // 環境ごとのユーザープール名を取得
-        const environment = this.node.tryGetContext('env') || 'dev';
-        const userPoolName = `${environment}-userPool`;
+        const userPoolName = `${stage}-UserPool`;
 
         // ユーザープールの作成
-        const userPool = new cognito.UserPool(this, 'MyUserPool', {
+        const userPool = new cognito.UserPool(this, `${stage}-UserPool`, {
           userPoolName: userPoolName,
           signInAliases: {
-            email: true, // メールアドレスでサインイン可能
+            email: true,
           },
-          autoVerify: { // メールアドレスの自動確認
+          autoVerify: {
             email: true,
           },
           passwordPolicy: {
@@ -36,6 +35,7 @@ export class CdkHelloWorldStack extends cdk.Stack {
             requireDigits: true,
           },
         });
+       
 
         // ユーザープールクライアントの作成
         const userPoolClient = new cognito.UserPoolClient(this, 'MyUserPoolClient', {
