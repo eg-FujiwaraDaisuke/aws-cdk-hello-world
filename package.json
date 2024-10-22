@@ -4,7 +4,9 @@
   "scripts": {
     "build": "webpack --config webpack.config.ts",
     "start": "node app.js",
-    "test": "vitest run"
+    "test": "vitest run",
+    "deploy:dev": "cdk deploy --require-approval never --context stage=dev",
+    "deploy:stg": "cdk deploy --require-approval never --context stage=stg"
   },
   "dependencies": {
     "aws-cdk-lib": "^2.161.0",
