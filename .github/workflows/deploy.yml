@@ -50,8 +50,11 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_REGION: 'ap-northeast-1'  # 使用する AWS リージョン
         run: |
-          if [[ "${{ github.ref }}" == "refs/heads/develop" ]]; then
-            npm run deploy:dev
-          elif [[ "${{ github.ref }}" == "refs/heads/stg" ]]; then
-            npm run deploy:stg
-          fi
+          case "${{ github.ref }}" in
+            "refs/heads/develop")
+              npm run deploy:dev
+              ;;
+            "refs/heads/stg")
+              npm run deploy:stg
+              ;;
+          esac
