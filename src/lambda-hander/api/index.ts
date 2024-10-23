@@ -1,8 +1,4 @@
-import { Context, APIGatewayEvent, APIGatewayProxyResult } from 'aws-lambda';
-
-export interface API_ROLE_DEFS {
-    // 役割定義が必要な場合はここに定義
-}
+// import { Context, APIGatewayEvent, APIGatewayProxyResult } from 'aws-lambda';
 
 export default function api(
     handler: (context: Context, request: Request, response: Response) => Promise<void>,
