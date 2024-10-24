@@ -1,7 +1,7 @@
 import * as path from 'path';
 
 export class Config {
-    public readonly rootDir = path.join(__dirname, '../../');
+    public readonly rootDir = path.join(__dirname, '../');
     public readonly distDir = path.join(this.rootDir, '.dist');
 
     /**
@@ -9,18 +9,18 @@ export class Config {
      * @param { string } stage - 環境（例: 'dev', 'stg', 'prd'）
      * @return { string } - userPool文字列
      */
-    public userPool(stage: string): string {
-        switch (stage) {
-            case 'dev':
-                return 'ap-northeast-dev';
-            case 'stg':
-                return 'ap-northeast-stg';
-            case 'prd':
-                return 'ap-northeast-prd';
-            default:
-                return '';
-        }
-    }
+    // public userPool(stage: string): string {
+    //     switch (stage) {
+    //         case 'dev':
+    //             return 'ap-northeast-dev';
+    //         case 'stg':
+    //             return 'ap-northeast-stg';
+    //         case 'prd':
+    //             return 'ap-northeast-prd';
+    //         default:
+    //             return '';
+    //     }
+    // }
 
     /**
      * 環境別に許可されたオリジンを返す
