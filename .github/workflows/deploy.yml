@@ -1,4 +1,3 @@
-yaml
 name: CDK Deploy
 
 on:
