@@ -6,6 +6,7 @@ import * as path from 'path';
 import * as cognito from 'aws-cdk-lib/aws-cognito';
 import { Context } from '../context';
 import { Config } from '../config';
+import { CreateCdkHelloWorldApi } from './api';
 
 export class CdkHelloWorldStack extends cdk.Stack {
     constructor(scope: Construct) {
@@ -25,6 +26,8 @@ export class CdkHelloWorldStack extends cdk.Stack {
             scope: this,
             prefix: id,
         };
+
+        new CreateCdkHelloWorldApi(this, context);
 
         const distDir = context.config.distDir;
 
