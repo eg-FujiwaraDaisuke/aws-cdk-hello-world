@@ -5,22 +5,22 @@ export class Config {
     public readonly distDir = path.join(this.rootDir, '.dist');
 
     /**
-     * 環境別にuserPoolを返す
+     * 環境別にuserPoolIdを返す
      * @param { string } stage - 環境（例: 'dev', 'stg', 'prd'）
-     * @return { string } - userPool文字列
+     * @return { string } - userPoolId文字列
      */
-    // public userPool(stage: string): string {
-    //     switch (stage) {
-    //         case 'dev':
-    //             return 'ap-northeast-dev';
-    //         case 'stg':
-    //             return 'ap-northeast-stg';
-    //         case 'prd':
-    //             return 'ap-northeast-prd';
-    //         default:
-    //             return '';
-    //     }
-    // }
+    public userPoolId(stage: string): string {
+        switch (stage) {
+            case 'dev':
+                return 'ap-northeast-dev';
+            case 'stg':
+                return 'ap-northeast-stg';
+            case 'prd':
+                return 'ap-northeast-prd';
+            default:
+                return '';
+        }
+    }
 
     /**
      * 環境別に許可されたオリジンを返す
