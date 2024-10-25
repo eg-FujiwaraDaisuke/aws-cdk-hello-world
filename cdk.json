@@ -1,5 +1,5 @@
 {
-    "app": "npx ts-node bin/hello-world.ts",
+    "app": "npx ts-node bin/hello-app.ts",
     "context": {
         "account": "675693637283",
         "region": "ap-northeast-1"

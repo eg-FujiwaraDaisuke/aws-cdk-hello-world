@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { handler } from '../../lambda/hello';
+import { handler } from '../../../src/lambda-handler/api/hello';
 
 describe('Lambda Handler', () => {
     it('should return a valid response', async () => {

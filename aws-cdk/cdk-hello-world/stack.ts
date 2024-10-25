@@ -33,7 +33,7 @@ export class CdkHelloWorldStack extends cdk.Stack {
           code: lambda.Code.fromAsset(
             path.join(
               distDir,
-                'lambda'
+                'lambda-handler/api'
             )
         ),
           handler: 'hello.handler',
@@ -88,4 +88,4 @@ export class CdkHelloWorldStack extends cdk.Stack {
           description: 'The client ID of the user pool client',
         });
     }
-  }
+}

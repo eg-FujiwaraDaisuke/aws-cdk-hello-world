@@ -4,7 +4,8 @@ import { Configuration } from 'webpack';
 import * as fs from 'fs';
 
 const ROOT_DIR = path.resolve(__dirname);
-const entry = { ...getEntries('lambda') };
+const SRC_DIR = path.join(ROOT_DIR, 'src');
+const entry = { ...getEntries('lambda-handler') };
 
 const config: Configuration = {
   entry,
@@ -40,7 +41,7 @@ const config: Configuration = {
 export default config;
 
 function getEntries(dirname: string, entries: Record<string, string> = {}): {} {
-  const dirpath = path.join(ROOT_DIR, dirname);
+  const dirpath = path.join(SRC_DIR, dirname);
   const dirs = fs.readdirSync(dirpath, { withFileTypes: true });
   const targets = dirs.filter(({ name }) => name !== 'base');
 
