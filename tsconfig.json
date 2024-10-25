@@ -11,6 +11,7 @@
   "include": [
     "src/**/*",
     "bin/**/*",
+    "aws-cdk",
   ],
   "exclude": ["node_modules"]
 }
