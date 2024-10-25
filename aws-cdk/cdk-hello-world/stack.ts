@@ -4,8 +4,8 @@ import * as lambda from 'aws-cdk-lib/aws-lambda';
 import * as apigateway from 'aws-cdk-lib/aws-apigateway';
 import * as path from 'path';
 import * as cognito from 'aws-cdk-lib/aws-cognito';
-import { Context } from '../context';
-import { Config } from '../config';
+import { Context } from '../../src/context';
+import { Config } from '../../src/config';
 
 export class CdkHelloWorldStack extends cdk.Stack {
     constructor(scope: Construct) {
@@ -33,7 +33,7 @@ export class CdkHelloWorldStack extends cdk.Stack {
           code: lambda.Code.fromAsset(
             path.join(
               distDir,
-                'lambda'
+                'src/lambda-hander/api'
             )
         ),
           handler: 'hello.handler',
@@ -88,4 +88,4 @@ export class CdkHelloWorldStack extends cdk.Stack {
           description: 'The client ID of the user pool client',
         });
     }
-  }
+}
