@@ -33,7 +33,7 @@ export class CdkHelloWorldStack extends cdk.Stack {
           code: lambda.Code.fromAsset(
             path.join(
               distDir,
-                'src/lambda-hander/api'
+                'lambda-handler/api'
             )
         ),
           handler: 'hello.handler',
