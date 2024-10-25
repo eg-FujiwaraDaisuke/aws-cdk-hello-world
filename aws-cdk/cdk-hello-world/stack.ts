@@ -4,8 +4,8 @@ import * as lambda from 'aws-cdk-lib/aws-lambda';
 import * as apigateway from 'aws-cdk-lib/aws-apigateway';
 import * as path from 'path';
 import * as cognito from 'aws-cdk-lib/aws-cognito';
-import { Context } from '../../src/context';
-import { Config } from '../../src/config';
+import { Context } from '../context';
+import { Config } from '../config';
 
 export class CdkHelloWorldStack extends cdk.Stack {
     constructor(scope: Construct) {
