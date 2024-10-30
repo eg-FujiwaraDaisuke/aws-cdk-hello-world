@@ -10,9 +10,11 @@
   },
   "dependencies": {
     "aws-cdk-lib": "^2.161.0",
-    "constructs": "^10.3.0"
+    "constructs": "^10.3.0",
+    "lodash": "^4.17.21"
   },
   "devDependencies": {
+    "@types/lodash": "^4.17.12",
     "aws-cdk": "^2.161.1",
     "ts-loader": "^9.5.1",
     "ts-node": "^10.9.2",
