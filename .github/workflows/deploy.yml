@@ -34,9 +34,12 @@ jobs:
       # - name: Build
       #   run: npm run build
 
+      - name: npm install
+        run: npm install
+
       - name: pwd
         run: pwd
-        
+
       - name: ls
         run: ls
       # - name: Run tests
