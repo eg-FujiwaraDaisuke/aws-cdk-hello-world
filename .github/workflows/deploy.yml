@@ -34,9 +34,6 @@ jobs:
       # - name: Build
       #   run: npm run build
 
-      - name: Clear npm cache
-        run: npm cache clean --force
-
       - name: pwd
         run: pwd
 
