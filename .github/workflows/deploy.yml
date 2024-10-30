@@ -37,11 +37,11 @@ jobs:
       - name: Clear npm cache
         run: npm cache clean --force
 
-      - name: npm install
-        run: npm install
-
       - name: pwd
         run: pwd
+
+      - name: npm install
+        run: npm install
 
       - name: ls
         run: ls
