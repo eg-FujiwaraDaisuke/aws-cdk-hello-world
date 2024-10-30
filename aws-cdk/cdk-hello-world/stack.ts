@@ -1,11 +1,9 @@
 import * as cdk from 'aws-cdk-lib';
 import { Construct } from 'constructs';
-import * as lambda from 'aws-cdk-lib/aws-lambda';
-import * as apigateway from 'aws-cdk-lib/aws-apigateway';
-import * as path from 'path';
 import * as cognito from 'aws-cdk-lib/aws-cognito';
 import { Context } from '../context';
 import { Config } from '../config';
+import { HelloApi } from './api/hello';
 
 export class CdkHelloWorldStack extends cdk.Stack {
     constructor(scope: Construct) {
@@ -26,26 +24,7 @@ export class CdkHelloWorldStack extends cdk.Stack {
             prefix: id,
         };
 
-        const distDir = context.config.distDir;
-
-        const helloWorldFunction = new lambda.Function(this, 'HelloWorldFunction', {
-          runtime: lambda.Runtime.NODEJS_20_X,
-          code: lambda.Code.fromAsset(
-            path.join(
-              distDir,
-                'lambda-handler/api'
-            )
-        ),
-          handler: 'hello.handler',
-        });
-
-        const api = new apigateway.LambdaRestApi(this, 'HelloWorldApi', {
-          handler: helloWorldFunction,
-          proxy: false,
-        });
-
-        const helloResource = api.root.addResource('hello');
-        helloResource.addMethod('GET');
+        new HelloApi(this, context);
 
         // 以下ユーザープールの作成
         // 環境ごとのユーザープール名を取得
