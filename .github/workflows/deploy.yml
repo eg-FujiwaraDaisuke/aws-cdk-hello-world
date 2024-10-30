@@ -40,22 +40,22 @@ jobs:
       #   run: npm test
 
   # deploy:
-    runs-on: ubuntu-latest
-    needs: test
-    if: github.event_name == 'push'
+    # runs-on: ubuntu-latest
+    # needs: test
+    # if: github.event_name == 'push'
 
-    steps:
-      - name: Deploy to AWS
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_REGION: 'ap-northeast-1'
-        run: |
-          case "${{ github.ref }}" in
-            "refs/heads/develop")
-              npm run deploy:dev
-              ;;
-            "refs/heads/stg")
-              npm run deploy:stg
-              ;;
-          esac
+    # steps:
+    #   - name: Deploy to AWS
+    #     env:
+    #       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+    #       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+    #       AWS_REGION: 'ap-northeast-1'
+    #     run: |
+    #       case "${{ github.ref }}" in
+    #         "refs/heads/develop")
+    #           npm run deploy:dev
+    #           ;;
+    #         "refs/heads/stg")
+    #           npm run deploy:stg
+    #           ;;
+    #       esac
