@@ -33,6 +33,8 @@ jobs:
     steps:
       # - name: Build
       #   run: npm run build
+      - name: cd
+        run: cd
 
       - name: pwd
         run: pwd
