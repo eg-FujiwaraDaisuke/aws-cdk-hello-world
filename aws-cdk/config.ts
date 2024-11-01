@@ -14,17 +14,17 @@ export class Config {
      * @param { string } stage - 環境（例: 'dev', 'stg', 'prd'）
      * @return { string[] } - 許可されたオリジンの配列
      */
-    public allowOrigins(stage: string): string[] {
-        const localhost = 'http://localhost:3000';
-        switch (stage) {
-            case 'dev':
-                return ['https:'];
-            case 'stg':
-                return ['https:', localhost];
-            case 'prd':
-                return ['https:'];
-            default:
-                return [];
-        }
-    }
+    // public allowOrigins(stage: string): string[] {
+    //     const localhost = 'http://localhost:3000';
+    //     switch (stage) {
+    //         case 'dev':
+    //             return ['https:'];
+    //         case 'stg':
+    //             return ['https:', localhost];
+    //         case 'prd':
+    //             return ['https:'];
+    //         default:
+    //             return [];
+    //     }
+    // }
 }
