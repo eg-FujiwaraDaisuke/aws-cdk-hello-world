@@ -12,8 +12,8 @@ export class CdkHelloWorldStack extends cdk.Stack {
         const env = { account, region };
         
         const stage: string = scope.node.tryGetContext('stage');
-        const stackType = 'cdkHelloWorld';
-        const stackId = `${stage}-${stackType}`;
+        const stackType = 'stf03111-cdkHelloWorld';
+        const stackId = `${stackType}-${stage}`;
         super(scope, stackId, { env });
 
         const userPool = new EnvironmentUserPool(this, stackId)
