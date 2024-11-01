@@ -1,6 +1,5 @@
 import * as cdk from 'aws-cdk-lib';
 import { Construct } from 'constructs';
-import * as cognito from 'aws-cdk-lib/aws-cognito';
 import { Context } from '../context';
 import { Config } from '../config';
 import { HelloApi } from './api/hello';
@@ -17,12 +16,13 @@ export class CdkHelloWorldStack extends cdk.Stack {
         const stackId = `${stage}-${stackType}`;
         super(scope, stackId, { env });
 
-        new EnvironmentUserPool(this, stackId)
+        const userPool = new EnvironmentUserPool(this, stackId)
 
+        const config = new Config(userPool.userPoolId);
         const context: Context = {
             stage,
-            config: new Config(),
-            stackType: stackType,
+            config,
+            stackType,
             scope: this,
             prefix: stackId,
         };
