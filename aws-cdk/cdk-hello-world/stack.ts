@@ -28,46 +28,5 @@ export class CdkHelloWorldStack extends cdk.Stack {
         };
 
         new HelloApi(this, context);
-
-        // // 以下ユーザープールの作成
-        // // 環境ごとのユーザープール名を取得
-        // const userPoolName = `${stage}-UserPool`;
-
-        // // ユーザープールの作成
-        // const userPool = new cognito.UserPool(this, `${stage}-UserPool`, {
-        //   userPoolName: userPoolName,
-        //   signInAliases: {
-        //     email: true,
-        //   },
-        //   autoVerify: {
-        //     email: true,
-        //   },
-        //   passwordPolicy: {
-        //     minLength: 8,
-        //     requireSymbols: true,
-        //     requireUppercase: true,
-        //     requireLowercase: true,
-        //     requireDigits: true,
-        //   },
-        // });
-
-        // // ユーザープールクライアントの作成
-        // const userPoolClient = new cognito.UserPoolClient(this, 'MyUserPoolClient', {
-        //   userPool,
-        //   authFlows: {
-        //     userPassword: true,
-        //   },
-        // });
-
-        // // 出力情報
-        // new cdk.CfnOutput(this, 'UserPoolId', {
-        //   value: userPool.userPoolId,
-        //   description: 'The ID of the user pool',
-        // });
-
-        // new cdk.CfnOutput(this, 'UserPoolClientId', {
-        //   value: userPoolClient.userPoolClientId,
-        //   description: 'The client ID of the user pool client',
-        // });
     }
 }
