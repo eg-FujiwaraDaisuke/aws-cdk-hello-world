@@ -33,7 +33,7 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-  test:
+  lint:
     runs-on: ubuntu-latest
     needs: setup
     steps:
@@ -53,8 +53,28 @@ jobs:
             .npm
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
 
-      - name: Build
-        run: npm run build
+      - name: Run lint
+        run: npm run lint
+
+  test:
+    runs-on: ubuntu-latest
+    needs: lint
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+
+      - name: Cache node modules
+        uses: actions/cache@v3
+        with:
+          path: |
+            node_modules
+            .npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
 
       - name: Run tests
         env:
@@ -81,6 +101,9 @@ jobs:
             node_modules
             .npm
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+
+      - name: Build
+        run: npm run build
 
       - name: Deploy to AWS
         env:
