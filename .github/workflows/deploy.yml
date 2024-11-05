@@ -58,7 +58,7 @@ jobs:
 
       - name: Run tests
         env:
-          NODE_PATH: .
+          NODE_PATH: ./src
         run: npm test
 
   deploy:
