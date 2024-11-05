@@ -26,7 +26,7 @@ export class ApiGateWay extends apiGateWay.RestApi {
             // CloudWatch Logs にログを送信するための IAM ロールを作成する
             cloudWatchRole: true,
             defaultMethodOptions: METHOD_OPTIONS,
-            // stage別にデプロイ指定
+            // stage別にApiGateWayを作成
             deployOptions: {
                 stageName: stage,
                 dataTraceEnabled: true,
@@ -38,6 +38,7 @@ export class ApiGateWay extends apiGateWay.RestApi {
             restApiName: ApiGateWayId,
             // CORSの設定
             defaultCorsPreflightOptions: {
+                // 全てのオリジンからリクエストを許可
                 allowOrigins: apiGateWay.Cors.ALL_ORIGINS,
                 allowMethods: ['OPTIONS', 'GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
                 allowHeaders: [
