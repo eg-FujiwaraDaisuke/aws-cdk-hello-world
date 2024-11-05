@@ -16,8 +16,6 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-        with:
-          path: aws-cdk-hello-world
 
       - name: Set up Node.js
         uses: actions/setup-node@v3
@@ -28,12 +26,11 @@ jobs:
         uses: actions/cache@v3
         with:
           path: |
-            aws-cdk-hello-world/node_modules
-            aws-cdk-hello-world/.npm
+            node_modules
+            .npm
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
 
       - name: Install dependencies
-        working-directory: aws-cdk-hello-world
         run: npm install
 
   test:
@@ -42,8 +39,6 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-        with:
-          path: aws-cdk-hello-world
 
       - name: Set up Node.js
         uses: actions/setup-node@v3
@@ -54,16 +49,14 @@ jobs:
         uses: actions/cache@v3
         with:
           path: |
-            aws-cdk-hello-world/node_modules
-            aws-cdk-hello-world/.npm
+            node_modules
+            .npm
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
 
       - name: Build
-        working-directory: aws-cdk-hello-world
         run: npm run build
 
       - name: Run tests
-        working-directory: aws-cdk-hello-world
         run: npm test
 
   deploy:
@@ -73,8 +66,6 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-        with:
-          path: aws-cdk-hello-world
 
       - name: Set up Node.js
         uses: actions/setup-node@v3
@@ -85,12 +76,11 @@ jobs:
         uses: actions/cache@v3
         with:
           path: |
-            aws-cdk-hello-world/node_modules
-            aws-cdk-hello-world/.npm
+            node_modules
+            .npm
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
 
       - name: Deploy to AWS
-        working-directory: aws-cdk-hello-world
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
