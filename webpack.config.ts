@@ -12,10 +12,8 @@ const config: Configuration = {
   output: {
     filename: "[name].js",
     path: path.resolve(ROOT_DIR, ".dist"),
-    // CDK アプリは CommonJS モジュールとしてエクスポートされるため
     libraryTarget: "commonjs2",
   },
-  // Node.js 環境をターゲット
   target: "node",
   mode: "development",
   module: {
@@ -30,18 +28,16 @@ const config: Configuration = {
   resolve: {
     extensions: [".ts", ".js"],
   },
-  // 警告を抑制する設定を追加
   ignoreWarnings: [
     {
-      message:
-        /Critical dependency: the request of a dependency is an expression/,
+      message: /Critical dependency: the request of a dependency is an expression/,
     },
   ],
 };
 
 export default config;
 
-function getEntries(dirname: string, entries: Record<string, string> = {}): {} {
+function getEntries(dirname: string, entries: Record<string, string> = {}): Record<string, string> {
   const dirpath = path.join(SRC_DIR, dirname);
   const dirs = fs.readdirSync(dirpath, { withFileTypes: true });
   const targets = dirs.filter(({ name }) => name !== "base");
