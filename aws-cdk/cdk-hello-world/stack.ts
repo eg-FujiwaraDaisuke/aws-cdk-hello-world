@@ -2,8 +2,8 @@ import * as cdk from "aws-cdk-lib";
 import { Construct } from "constructs";
 import { Config } from "../config";
 import { Context } from "../context";
-import { EnvironmentUserPool } from "../utils/constructs/userPool";
 import { HelloApi } from "./api/hello";
+import { EnvironmentUserPool } from "../utils/constructs/userPool";
 
 export class CdkHelloWorldStack extends cdk.Stack {
   constructor(scope: Construct) {
