@@ -13,28 +13,42 @@ on:
 jobs:
   setup:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-      
+        with:
+          path: aws-cdk-hello-world
+
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '20'
 
+      - name: Cache node modules
+        uses: actions/cache@v3
+        with:
+          path: |
+            aws-cdk-hello-world/node_modules
+            aws-cdk-hello-world/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+
       - name: Install dependencies
+        working-directory: aws-cdk-hello-world
         run: npm install
 
   test:
     runs-on: ubuntu-latest
     needs: setup
-
     steps:
+      - name: Use setup steps
+        uses: ./.github/actions/setup
+
       - name: Build
+        working-directory: aws-cdk-hello-world
         run: npm run build
 
       - name: Run tests
+        working-directory: aws-cdk-hello-world
         run: npm test
 
   deploy:
