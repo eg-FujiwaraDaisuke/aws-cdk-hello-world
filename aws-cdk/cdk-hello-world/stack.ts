@@ -1,32 +1,32 @@
-import * as cdk from 'aws-cdk-lib';
-import { Construct } from 'constructs';
-import { Context } from '../context';
-import { Config } from '../config';
-import { HelloApi } from './api/hello';
-import { EnvironmentUserPool } from '../utils/constructs/userPool';
+import * as cdk from "aws-cdk-lib";
+import { Construct } from "constructs";
+import { Config } from "../config";
+import { Context } from "../context";
+import { EnvironmentUserPool } from "../utils/constructs/userPool";
+import { HelloApi } from "./api/hello";
 
 export class CdkHelloWorldStack extends cdk.Stack {
-    constructor(scope: Construct) {
-        const account: string = scope.node.tryGetContext('account');
-        const region: string = scope.node.tryGetContext('region');
-        const env = { account, region };
-        
-        const stage: string = scope.node.tryGetContext('stage');
-        const stackType = 'stf03111-cdkHelloWorld';
-        const stackId = `${stackType}-${stage}`;
-        super(scope, stackId, { env });
+  constructor(scope: Construct) {
+    const account: string = scope.node.tryGetContext("account");
+    const region: string = scope.node.tryGetContext("region");
+    const env = { account, region };
 
-        const userPool = new EnvironmentUserPool(this, stackId)
+    const stage: string = scope.node.tryGetContext("stage");
+    const stackType = "stf03111-cdkHelloWorld";
+    const stackId = `${stackType}-${stage}`;
+    super(scope, stackId, { env });
 
-        const config = new Config(userPool.userPoolId);
-        const context: Context = {
-            stage,
-            config,
-            stackType,
-            scope: this,
-            prefix: stackId,
-        };
+    const userPool = new EnvironmentUserPool(this, stackId);
 
-        new HelloApi(this, context);
-    }
+    const config = new Config(userPool.userPoolId);
+    const context: Context = {
+      stage,
+      config,
+      stackType,
+      scope: this,
+      prefix: stackId,
+    };
+
+    new HelloApi(this, context);
+  }
 }
