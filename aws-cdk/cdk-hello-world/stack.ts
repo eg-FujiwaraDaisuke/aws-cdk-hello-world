@@ -3,6 +3,7 @@ import { Construct } from "constructs";
 import { Config } from "../config";
 import { Context } from "../context";
 import { HelloApi } from "./api/hello";
+import { ApiGateWay } from "../utils/constructs/apiGateWay";
 import { EnvironmentUserPool } from "../utils/constructs/userPool";
 
 export class CdkHelloWorldStack extends cdk.Stack {
@@ -27,6 +28,7 @@ export class CdkHelloWorldStack extends cdk.Stack {
       prefix: stackId,
     };
 
-    new HelloApi(this, context);
+    const apiGateWay = new ApiGateWay(this, context);
+    new HelloApi(this, context, apiGateWay);
   }
 }

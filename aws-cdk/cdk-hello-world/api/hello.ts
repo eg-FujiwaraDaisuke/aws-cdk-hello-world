@@ -1,13 +1,13 @@
 import { Duration } from "aws-cdk-lib";
-import * as apigateway from "aws-cdk-lib/aws-apigateway";
 import * as lambda from "aws-cdk-lib/aws-lambda";
 import { Construct } from "constructs";
 import * as path from "path";
 import { Context } from "../../context";
+import { ApiGateWay } from "../../utils/constructs/apiGateWay";
 import { LambdaFunction } from "../../utils/constructs/lambda";
 
 export class HelloApi extends Construct {
-  public constructor(scope: Construct, context: Context) {
+  public constructor(scope: Construct, context: Context, apiGateWay: ApiGateWay) {
     const constructId = "HelloApi";
     super(scope, constructId);
     const { stackType } = context;
@@ -15,7 +15,7 @@ export class HelloApi extends Construct {
     const apiName = "hello";
     const apiPath = "api";
 
-    const helloWorldFunction = new LambdaFunction(this, {
+    new LambdaFunction(this, {
       context,
       lambdaName: apiName,
       props: {
@@ -29,17 +29,12 @@ export class HelloApi extends Construct {
         timeout: Duration.minutes(15),
       },
       timeoutDuration: 14 * 60,
-    });
-
-    const api = new apigateway.LambdaRestApi(this, "HelloWorldApi", {
-      handler: helloWorldFunction,
-      proxy: false,
-    });
+    });    
 
     // エンドポイントとメソッドを設定
     // エンドポイント　api/${stackType}/${apiName}
     const apiResource =
-      api.root.getResource(apiPath) ?? api.root.addResource(apiPath);
+    apiGateWay.root.getResource(apiPath) ?? apiGateWay.root.addResource(apiPath);
     const stackResource =
       apiResource.getResource(`${stackType}`) ??
       apiResource.addResource(`${stackType}`);
