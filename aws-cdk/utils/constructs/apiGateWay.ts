@@ -18,11 +18,13 @@ const METHOD_OPTIONS = {
 };
 
 export class ApiGateWay extends apiGateWay.RestApi {
+    public authorizer: apiGateWay.CognitoUserPoolsAuthorizer;
+
     public constructor(scope: Construct, context: Context) {
         const { stage, prefix } = context;
 
-        const ApiGateWayId = `${prefix}-ApiGateWay`;
-        super(scope, ApiGateWayId, {
+        const apiGateWayId = `${prefix}-ApiGateWay`;
+        super(scope, apiGateWayId, {
             // CloudWatch Logs にログを送信するための IAM ロールを作成する
             cloudWatchRole: true,
             defaultMethodOptions: METHOD_OPTIONS,
@@ -35,7 +37,7 @@ export class ApiGateWay extends apiGateWay.RestApi {
             // HTML フォームからデータを受信可能
             binaryMediaTypes: ['application/octet-stream', 'multipart/form-data'],
             description: `API Gateway for ${prefix}`,
-            restApiName: ApiGateWayId,
+            restApiName: apiGateWayId,
             // CORSの設定
             defaultCorsPreflightOptions: {
                 // 全てのオリジンからリクエストを許可
@@ -52,7 +54,7 @@ export class ApiGateWay extends apiGateWay.RestApi {
             },
         });
 
-        this.setUserPoolAuthorizer(scope, context);
+        this.authorizer = this.setUserPoolAuthorizer(scope, context);
     }
 
     /**
@@ -63,7 +65,7 @@ export class ApiGateWay extends apiGateWay.RestApi {
     private setUserPoolAuthorizer(
         scope: Construct,
         context: Context,
-    ): void {
+    ): apiGateWay.CognitoUserPoolsAuthorizer {
         // userPoolIDのユーザプールを参照する
         const userPool = cognito.UserPool.fromUserPoolId(
             scope,
@@ -71,7 +73,7 @@ export class ApiGateWay extends apiGateWay.RestApi {
             context.config.userPoolId
         );
 
-        new apiGateWay.CognitoUserPoolsAuthorizer(scope, 'Authorizer', {
+        return new apiGateWay.CognitoUserPoolsAuthorizer(scope, 'Authorizer', {
             cognitoUserPools: [userPool],
         });
     }
