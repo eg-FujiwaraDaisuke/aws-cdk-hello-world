@@ -33,7 +33,7 @@ export class HelloApi extends Construct {
       timeoutDuration: 14 * 60,
     });
 
-    // API Gatewayとの統合設定
+    // api/${stackType}/apiNameをエンドポイントとする
     const apiResource =
       apiGateway.root.getResource(apiPath) ?? apiGateway.root.addResource(apiPath);
     const stackResource =
