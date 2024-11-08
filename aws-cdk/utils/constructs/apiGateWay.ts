@@ -1,6 +1,6 @@
 import * as cdk from "aws-cdk-lib";
 import { Duration } from "aws-cdk-lib";
-import * as apiGateway from "aws-cdk-lib/aws-apigateway";
+import * as apiGateWay from "aws-cdk-lib/aws-apigateway";
 import * as lambda from "aws-cdk-lib/aws-lambda";
 import { Construct } from "constructs";
 import { Context } from "../../context";
@@ -31,23 +31,25 @@ export class ApiGateWayStack extends cdk.Stack {
       timeout: Duration.seconds(30),
     });
     // API Gateway
-    const restApi = new apiGateway.RestApi(this, `${stage}-NestAppApiGateway`, {
+    const restApi = new apiGateWay.RestApi(this, `${stage}-NestAppApiGateway`, {
       restApiName: `${stage}-NestAppApiGw`,
       deployOptions: {
         stageName: stage,
+        dataTraceEnabled: true,
+        loggingLevel: apiGateWay.MethodLoggingLevel.INFO,
       },
       // CORS設定
       defaultCorsPreflightOptions: {
         // warn: 要件に合わせ適切なパラメータに絞る
-        allowOrigins: apiGateway.Cors.ALL_ORIGINS,
-        allowMethods: apiGateway.Cors.ALL_METHODS,
-        allowHeaders: apiGateway.Cors.DEFAULT_HEADERS,
+        allowOrigins: apiGateWay.Cors.ALL_ORIGINS,
+        allowMethods: apiGateWay.Cors.ALL_METHODS,
+        allowHeaders: apiGateWay.Cors.DEFAULT_HEADERS,
         statusCode: 200,
       },
     });
 
     restApi.root.addProxy({
-      defaultIntegration: new apiGateway.LambdaIntegration(appLambda),
+      defaultIntegration: new apiGateWay.LambdaIntegration(appLambda),
       anyMethod: true
     });
   }
