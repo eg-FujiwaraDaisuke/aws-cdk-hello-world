@@ -2,7 +2,7 @@ import * as cdk from "aws-cdk-lib";
 import { Construct } from "constructs";
 import { Config } from "../config";
 import { Context } from "../context";
-import { HelloApi } from "./api/hello";
+import { ApiGateWayStack } from "../utils/constructs/apiGateWay";
 import { EnvironmentUserPool } from "../utils/constructs/userPool";
 
 export class CdkHelloWorldStack extends cdk.Stack {
@@ -27,6 +27,8 @@ export class CdkHelloWorldStack extends cdk.Stack {
       prefix: stackId,
     };
 
-    new HelloApi(this, context);
+    new ApiGateWayStack(this, context)
+
+    // new HelloApi(this, context);
   }
 }
