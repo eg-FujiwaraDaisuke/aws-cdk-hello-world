@@ -105,6 +105,15 @@ jobs:
       - name: Build
         run: npm run build
 
+      - name: cd Nest
+        run: cd src/api
+
+      - name: Build Nest
+        run: npm run build
+
+      - name: cd cdk-app
+        run: cd ../..
+
       - name: Deploy to AWS
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
