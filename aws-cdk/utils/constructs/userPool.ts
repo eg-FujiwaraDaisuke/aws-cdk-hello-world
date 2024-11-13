@@ -34,6 +34,21 @@ export class EnvironmentUserPool extends cognito.UserPool {
       },
     });
 
+    // Identity Poolの作成
+    const identityPoolId = `${stackId}-identityPool`;
+    const identityPool = new cognito.CfnIdentityPool(scope, identityPoolId, {
+      identityPoolName: identityPoolId,
+      allowUnauthenticatedIdentities: false,
+    });
+
+    // Cognito Identity PoolとCognito User Poolの関連付け
+    new cognito.CfnIdentityPoolRoleAttachment(scope, `${stackId}-identityPoolRoleAttachment`, {
+      identityPoolId: identityPool.ref,
+      roles: {
+        authenticated: '',
+      },
+    });
+
     // 出力情報
     new cdk.CfnOutput(this, "UserPoolIdOutput", {
       value: this.userPoolId,
@@ -43,6 +58,11 @@ export class EnvironmentUserPool extends cognito.UserPool {
     new cdk.CfnOutput(this, "UserPoolClientIdOutput", {
       value: userPoolClient.userPoolClientId,
       description: `The client ID of the ${stackId} user pool client`,
+    });
+
+    new cdk.CfnOutput(this, "IdentityPoolIdOutput", {
+      value: identityPool.ref,
+      description: `The ID of the ${stackId} identity pool`,
     });
   }
 }
