@@ -1,6 +1,6 @@
 import * as cdk from "aws-cdk-lib";
 import * as cognito from "aws-cdk-lib/aws-cognito";
-import * as iam from "aws-cdk-lib/aws-iam"; // IAM モジュールをインポート
+import * as iam from "aws-cdk-lib/aws-iam";
 import { Construct } from "constructs";
 
 export class EnvironmentUserPool extends cognito.UserPool {
@@ -10,12 +10,8 @@ export class EnvironmentUserPool extends cognito.UserPool {
     // UserPoolのコンストラクタを呼び出す
     super(scope, userPoolName, {
       userPoolName: userPoolName,
-      signInAliases: {
-        email: true,
-      },
-      autoVerify: {
-        email: true,
-      },
+      signInAliases: { email: true },
+      autoVerify: { email: true },
       passwordPolicy: {
         minLength: 8,
         requireSymbols: true,
@@ -25,69 +21,66 @@ export class EnvironmentUserPool extends cognito.UserPool {
       },
     });
 
-    const userPoolClientId = `${stackId}-UserPoolClient`;
-
-    // ユーザープールクライアントの作成
-    const userPoolClient = new cognito.UserPoolClient(scope, userPoolClientId, {
+    // UserPoolClientの作成
+    const userPoolClient = new cognito.UserPoolClient(scope, `${stackId}-UserPoolClient`, {
       userPool: this,
-      authFlows: {
-        userPassword: true,
-      },
+      authFlows: { userPassword: true },
     });
 
     // Identity Poolの作成
-    const identityPoolId = `${stackId}-identityPool`;
-    const identityPool = new cognito.CfnIdentityPool(scope, identityPoolId, {
-      identityPoolName: identityPoolId,
+    const identityPool = new cognito.CfnIdentityPool(scope, `${stackId}-IdentityPool`, {
+      identityPoolName: `${stackId}-identityPool`,
       allowUnauthenticatedIdentities: false,
     });
 
-    // 環境ごとの IAM ロールを作成
+    // IAM ロールの作成
     const authenticatedRole = new iam.Role(scope, `${stackId}-AuthenticatedRole`, {
       assumedBy: new iam.FederatedPrincipal(
-        'cognito-identity.amazonaws.com',
+        "cognito-identity.amazonaws.com",
         {
-          StringEquals: {
-            'cognito-identity.amazonaws.com:aud': identityPool.ref,
+          "StringEquals": {
+            "cognito-identity.amazonaws.com:aud": identityPool.ref,
           },
-          ForAnyValueEquals: {
-            'cognito-identity.amazonaws.com:amr': 'authenticated',
+          "ForAnyValue:StringLike": {
+            "cognito-identity.amazonaws.com:amr": "authenticated",
           },
         },
-        'sts:AssumeRoleWithWebIdentity',
+        "sts:AssumeRoleWithWebIdentity"
       ),
     });
 
-    const lambdaAccessPolicy = new iam.PolicyStatement({
-      actions: ['lambda:InvokeFunction'],
-      resources: [`arn:aws:lambda:${cdk.Stack.of(scope).region}:${cdk.Stack.of(scope).account}:function:${stackId}-*`], // 環境ごとの Lambda 関数にアクセス
-    });
+    // Lambda アクセス用のポリシー
+    authenticatedRole.addToPolicy(
+      new iam.PolicyStatement({
+        actions: ["lambda:InvokeFunction"],
+        resources: [
+          `arn:aws:lambda:${cdk.Stack.of(scope).region}:${cdk.Stack.of(scope).account}:function:${stackId}-*`,
+        ],
+      })
+    );
 
-    // IAM ロールにポリシーを追加
-    authenticatedRole.addToPolicy(lambdaAccessPolicy);
-
-    // Cognito Identity PoolとCognito User Poolの関連付け
-    new cognito.CfnIdentityPoolRoleAttachment(scope, `${stackId}-identityPoolRoleAttachment`, {
+    // Identity PoolとIAMロールの関連付け
+    new cognito.CfnIdentityPoolRoleAttachment(scope, `${stackId}-IdentityPoolRoleAttachment`, {
       identityPoolId: identityPool.ref,
       roles: {
-        authenticated: authenticatedRole.roleArn, // IAM ロールの ARN を指定
+        authenticated: authenticatedRole.roleArn,
       },
     });
 
-    // 出力情報
-    new cdk.CfnOutput(this, "UserPoolIdOutput", {
+    // 出力の作成
+    new cdk.CfnOutput(scope, `${stackId}-UserPoolId`, {
       value: this.userPoolId,
-      description: `The ID of the ${stackId} user pool`,
+      description: `The ID of the ${stackId} User Pool`,
     });
 
-    new cdk.CfnOutput(this, "UserPoolClientIdOutput", {
+    new cdk.CfnOutput(scope, `${stackId}-UserPoolClientId`, {
       value: userPoolClient.userPoolClientId,
-      description: `The client ID of the ${stackId} user pool client`,
+      description: `The Client ID of the ${stackId} User Pool Client`,
     });
 
-    new cdk.CfnOutput(this, "IdentityPoolIdOutput", {
+    new cdk.CfnOutput(scope, `${stackId}-IdentityPoolId`, {
       value: identityPool.ref,
-      description: `The ID of the ${stackId} identity pool`,
+      description: `The ID of the ${stackId} Identity Pool`,
     });
   }
 }
