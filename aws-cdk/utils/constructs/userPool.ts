@@ -10,8 +10,14 @@ export class EnvironmentUserPool extends cognito.UserPool {
     // UserPoolのコンストラクタを呼び出す
     super(scope, userPoolName, {
       userPoolName: userPoolName,
-      signInAliases: { email: true },
-      autoVerify: { email: true },
+      signInAliases: {
+        username: true,
+        email: true,
+        phone: false,
+      },
+      autoVerify: {
+        email: false,
+      },
       passwordPolicy: {
         minLength: 8,
         requireSymbols: true,
