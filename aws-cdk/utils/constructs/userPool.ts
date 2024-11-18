@@ -24,7 +24,10 @@ export class EnvironmentUserPool extends cognito.UserPool {
     // UserPoolClientの作成
     const userPoolClient = new cognito.UserPoolClient(scope, `${stackId}-UserPoolClient`, {
       userPool: this,
-      authFlows: { userPassword: true },
+      authFlows: {
+        userPassword: true,
+        userSrp: true,  // SRP 認証を有効にする
+      },
     });
 
     // Identity Poolの作成
