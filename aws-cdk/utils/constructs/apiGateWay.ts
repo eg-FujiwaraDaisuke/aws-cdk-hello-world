@@ -27,6 +27,7 @@ export class ApiGateWayStack extends cdk.Stack {
       environment: {
         NODE_PATH: "$NODE_PATH:/opt",
         AWS_NODEJS_CONNECTION_REUSE_ENABLED: "1",
+        STAGE: stage,
       },
       timeout: Duration.seconds(30),
     });
