@@ -4,3 +4,6 @@ node_modules/
 cdk.out/
 # build file directory
 .dist
+
+# nest app build file derectory
+src/api/dist
