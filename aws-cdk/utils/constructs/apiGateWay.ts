@@ -12,7 +12,7 @@ export class ApiGateWayStack extends cdk.Stack {
     super(scope, id);
     // Lambda layer
     const lambdaLayer = new lambda.LayerVersion(this, `${stage}-NestApplambdaLayer`, {
-      code: lambda.Code.fromAsset("src/node_modules"),
+      code: lambda.Code.fromAsset("src/api/node_modules"),
       compatibleRuntimes: [
         lambda.Runtime.NODEJS_20_X,
       ],
@@ -21,7 +21,7 @@ export class ApiGateWayStack extends cdk.Stack {
     // Lambda
     const appLambda = new lambda.Function(this, `${stage}-NestApplambda`, {
       runtime: lambda.Runtime.NODEJS_20_X,
-      code: lambda.Code.fromAsset("src/dist"),
+      code: lambda.Code.fromAsset("src/api/dist"),
       handler: "main.handler",
       layers: [lambdaLayer],
       environment: {
@@ -34,7 +34,7 @@ export class ApiGateWayStack extends cdk.Stack {
     const restApi = new apiGateWay.RestApi(this, `${stage}-NestAppApiGateway`, {
       restApiName: `${stage}-NestAppApiGw`,
       deployOptions: {
-        stageName: stage,
+        stageName: `api/${stage}`,
         dataTraceEnabled: true,
         loggingLevel: apiGateWay.MethodLoggingLevel.INFO,
       },

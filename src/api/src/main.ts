@@ -15,7 +15,7 @@ async function bootstrapServer(): Promise<Server> {
       AppModule,
       new ExpressAdapter(expressApp),
     );
-    nestApp.setGlobalPrefix('v1');
+    nestApp.setGlobalPrefix(`api/${stage}`);
     nestApp.use((req, res, next) => {
       res.header('Access-Control-Allow-Origin', '任意のオリジン')
       res.header('Access-Control-Allow-Headers', '任意のHTTPヘッダ')
